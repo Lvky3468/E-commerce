@@ -134,7 +134,7 @@
       <div class="nav-item" onclick="window.location.href = 'index.html'">
         Dummy Amazon
       </div>
-      <!-- <h3 id="prodSearch" onclick="searchRedirect()">search</h3> -->
+      
       <div class="search_bar">
         <div class="form_group">
           <input type="text" id="search" placeholder="search product" />
@@ -148,7 +148,7 @@
             id="rating"
             placeholder="rating"
           />
-          <!-- <span id="selectedRating">1</span> -->
+
         </div>
         <div>
           <button onclick="search()">
@@ -249,21 +249,17 @@
 
     function redirect(prodId) {
       window.location.href =
-        "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/product.html?prodId=" +
+        "product.html?prodId=" +
         prodId;
     }
-
-    //homepage button
-
-    //homepage redirection
     function homepageRedirect() {
       window.location.href =
-        "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/index.html";
+        "index.html";
     }
 
     function searchRedirect() {
       window.location.href =
-        "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/search.html";
+        "search.html";
     }
   </script>
 </html>
