@@ -6,62 +6,6 @@
     <title>Document</title>
 
     <style>
-      /* .productIndividual_card {
-              border: 5px solid black;
-            }
-            .content {
-              padding-left: 30px;
-            }
-
-            .image {
-              display: flex;
-              justify-content: center;
-            }
-            .image img {
-              width: 350px;
-              max-width: 100%;
-              border-radius: 10px;
-            }
-
-            .productIndividual_card {
-              max-width: 1000px;
-              margin: auto;
-              background: white;
-              border-radius: 12px;
-              padding: 20px;
-            }
-
-            #price_discount {
-              padding-left: 30px;
-              display: flex;
-              font-size: 20px;
-              gap: 20px;
-            }
-
-            #rating_stock {
-              padding-left: 30px;
-            }
-
-            body {
-              font-family: Arial, sans-serif;
-              background-color: #f4f4f4;
-              margin: 0;
-              padding: 20px;
-            }
-
-            .productIndividual_card h2 {
-              text-align: center;
-              margin-bottom: 20px;
-            }
-
-            .qrCode img {
-              width: 120px;
-            }
-
-            strong {
-              color: #724141;
-            } */
-
       .search_bar {
         display: flex;
         gap: 10px;
@@ -220,8 +164,6 @@
       <div class="nav-item" onclick="window.location.href = 'index.html'">
         Dummy Amazon
       </div>
-
-      <!-- <h3 id="prodSearch" onclick="searchRedirect()">search</h3> -->
       <div class="search_bar">
         <div class="form_group">
           <input type="text" id="searchname" placeholder="search product" />
@@ -241,7 +183,7 @@
         let searchvalue = document.getElementById("searchname").value;
 
         window.location.href =
-          "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/search.html?search=" +
+          "search.html?search=" +
           searchvalue;
       }
 
@@ -256,9 +198,6 @@
           .then((res) => res.json())
           .then((data) => {
             let product = data;
-            // console.log(JSON.stringify(data, null, 2));
-
-            // console.log(data);
             html += `
         <div class="productIndividual_card">
             <h2 style = "text-align:center">${product.title}</h2>
@@ -352,12 +291,12 @@
       //homepage redirection
       function homepageRedirect() {
         window.location.href =
-          "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/index.html";
+          "index.html";
       }
 
       function searchRedirect() {
         window.location.href =
-          "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/search.html";
+          "search.html";
       }
     </script>
   </body>
