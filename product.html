@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      /* .productIndividual_card {
+              border: 5px solid black;
+            }
+            .content {
+              padding-left: 30px;
+            }
+
+            .image {
+              display: flex;
+              justify-content: center;
+            }
+            .image img {
+              width: 350px;
+              max-width: 100%;
+              border-radius: 10px;
+            }
+
+            .productIndividual_card {
+              max-width: 1000px;
+              margin: auto;
+              background: white;
+              border-radius: 12px;
+              padding: 20px;
+            }
+
+            #price_discount {
+              padding-left: 30px;
+              display: flex;
+              font-size: 20px;
+              gap: 20px;
+            }
+
+            #rating_stock {
+              padding-left: 30px;
+            }
+
+            body {
+              font-family: Arial, sans-serif;
+              background-color: #f4f4f4;
+              margin: 0;
+              padding: 20px;
+            }
+
+            .productIndividual_card h2 {
+              text-align: center;
+              margin-bottom: 20px;
+            }
+
+            .qrCode img {
+              width: 120px;
+            }
+
+            strong {
+              color: #724141;
+            } */
+
+      .search_bar {
+        display: flex;
+        gap: 10px;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+      }
+
+      .productIndividual_card {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .productIndividual_card h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .image {
+        display: flex;
+        justify-content: center;
+      }
+
+      .image img {
+        width: 300px;
+        max-width: 100%;
+        border-radius: 10px;
+      }
+
+      .content,
+      #rating_stock {
+        padding-left: 30px;
+      }
+
+      #price_discount {
+        display: flex;
+        gap: 30px;
+        padding-left: 30px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      #price_discount p:first-child {
+        color: green;
+      }
+
+      .gallery {
+        margin-top: 20px;
+      }
+
+      .gallery h4 {
+        margin-bottom: 10px;
+      }
+
+      .gallery img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        margin-right: 10px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+      }
+
+      .reviews {
+        margin-top: 20px;
+      }
+
+      .review {
+        background: #f8f8f8;
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border-left: 4px solid #007bff;
+      }
+
+      .review p {
+        margin: 5px 0;
+      }
+
+      .qrCode {
+        margin-top: 20px;
+      }
+
+      .qrCode img {
+        width: 120px;
+      }
+
+      strong {
+        color: #333;
+      }
+
+      #homepage:hover {
+        cursor: pointer;
+        color: slateblue;
+      }
+      #navbar {
+        background-color: #333;
+        color: white;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 15px 30px;
+        margin-bottom: 20px;
+      }
+
+      #logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      #nav-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-item {
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .nav-item:hover {
+        color: #4da6ff;
+      }
+
+      .description {
+        line-height: 2;
+      }
+
+      @media screen and (max-width: 750px) {
+        .image img {
+          width: 300px;
+          height: 200px;
+        }
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div id="navbar">
+      <div class="nav-item" onclick="window.location.href = 'index.html'">
+        Dummy Amazon
+      </div>
+
+      <!-- <h3 id="prodSearch" onclick="searchRedirect()">search</h3> -->
+      <div class="search_bar">
+        <div class="form_group">
+          <input type="text" id="searchname" placeholder="search product" />
+        </div>
+
+        <div>
+          <button onclick="search()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="prodInfo"></div>
+
+    <script>
+      function search() {
+        let searchvalue = document.getElementById("searchname").value;
+
+        window.location.href =
+          "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/search.html?search=" +
+          searchvalue;
+      }
+
+      function loadProdInfo() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const prodId = urlParams.get("prodId");
+        let html = ``;
+        let url = `https://dummyjson.com/products/${prodId}`;
+        console.log(url);
+
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => {
+            let product = data;
+            // console.log(JSON.stringify(data, null, 2));
+
+            // console.log(data);
+            html += `
+        <div class="productIndividual_card">
+            <h2 style = "text-align:center">${product.title}</h2>
+
+            <div class="image">
+                <img src="${product.thumbnail}" alt="${product.title}" >
+            </div>
+
+            <p class="description" ><strong>Description:</strong> ${product.description}</p>
+
+            <div id = "price_discount" >
+            <p><strong>Price:</strong> $${product.price}</p>
+            <p><strong>Discount:</strong> ${product.discountPercentage}%</p>
+            </div>
+
+            <div id = "rating_stock">
+            <p><strong>Rating:</strong> ⭐ ${product.rating}</p>
+            <p><strong>Stock:</strong> ${product.stock}</p>
+            <p><strong>Availability:</strong> ${product.availabilityStatus}</p>
+            </div>
+
+
+            <div class = "content">
+            <p><strong>Brand:</strong> ${product.brand}</p>
+            <p><strong>Category:</strong> ${product.category}</p>
+            <p><strong>SKU:</strong> ${product.sku}</p>
+
+
+            <p><strong>Weight:</strong> ${product.weight} kg</p>
+
+            <p>
+                <strong>Dimensions:</strong>
+                ${product.dimensions.width} ×
+                ${product.dimensions.height} ×
+                ${product.dimensions.depth}
+            </p>
+
+            <p><strong>Tags:</strong> ${product.tags.join(", ")}</p>
+
+            <p><strong>Warranty:</strong> ${product.warrantyInformation}</p>
+            <p><strong>Shipping:</strong> ${product.shippingInformation}</p>
+            <p><strong>Return Policy:</strong> ${product.returnPolicy}</p>
+            <p><strong>Minimum Order:</strong> ${product.minimumOrderQuantity}</p>
+
+            <p><strong>Barcode:</strong> ${product.meta.barcode}</p>
+            <p><strong>Created:</strong> ${new Date(product.meta.createdAt).toLocaleDateString()}</p>
+            <p><strong>Updated:</strong> ${new Date(product.meta.updatedAt).toLocaleDateString()}</p>
+
+            <div class="qrCode">
+                <h4>QR Code</h4>
+                <img src="${product.meta.qrCode}" alt="QR Code">
+            </div>
+            </div>
+            <div class="gallery">
+                <h4>Product Images</h4>
+                ${product.images
+                  .map(
+                    (img) => `
+                    <img src="${img}" alt="${product.title}">
+                `,
+                  )
+                  .join("")}
+            </div>
+
+            <div class="reviews">
+                <h4>Reviews</h4>
+                ${product.reviews
+                  .map(
+                    (review) => `
+                    <div class="review">
+                        <p><strong>${review.reviewerName}</strong> (${review.rating}⭐)</p>
+                        <p>${review.comment}</p>
+                        <small>${new Date(review.date).toLocaleDateString()}</small>
+                    </div>
+                `,
+                  )
+                  .join("")}
+            </div>
+        </div>
+        `;
+
+            document.getElementById("prodInfo").innerHTML = html;
+          });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        loadProdInfo();
+      });
+      //homepage button
+
+      //homepage redirection
+      function homepageRedirect() {
+        window.location.href =
+          "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/index.html";
+      }
+
+      function searchRedirect() {
+        window.location.href =
+          "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/search.html";
+      }
+    </script>
+  </body>
+</html>

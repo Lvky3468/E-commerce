@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      #products {
+        width: 80%;
+        margin: 10px auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .product_card {
+        border: 1px solid black;
+        width: 100%;
+        height: 150px;
+        display: flex;
+        align-items: Center;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .img_card img {
+        width: 150px;
+        height: 120px;
+        box-shadow: 1px 1px 1px 1px gray;
+        cursor: pointer;
+      }
+
+      .img_card:hover {
+        transform: translateY(-5px);
+      }
+
+      .search_bar {
+        margin: 10px;
+      }
+
+      #homepage:hover {
+        cursor: pointer;
+        color: slateblue;
+      }
+
+      body {
+        font-family:
+          "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        margin: 0;
+      }
+
+      #navbar {
+        background-color: #333;
+        color: white;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 15px 30px;
+        margin-bottom: 20px;
+      }
+
+      #logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      #nav-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-item {
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .nav-item:hover {
+        color: #4da6ff;
+      }
+
+      .search_bar {
+        display: flex;
+        gap: 10px;
+      }
+
+      .form_group {
+        display: flex;
+        gap: 10px;
+      }
+
+      #catname {
+        color: blue;
+      }
+
+      @media screen and (max-width: 750px) {
+        .description {
+          width: 100px; /* required */
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .img_card img {
+          width: 80px;
+          height: 60px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+          margin-top: 5px;
+        }
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div id="navbar">
+      <div class="nav-item" onclick="window.location.href = 'index.html'">
+        Dummy Amazon
+      </div>
+      <!-- <h3 id="prodSearch" onclick="searchRedirect()">search</h3> -->
+      <div class="search_bar">
+        <div class="form_group">
+          <input type="text" id="search" placeholder="search product" />
+        </div>
+        <div class="form_group">
+          <input
+            type="number"
+            min="0"
+            max="5"
+            value="0"
+            id="rating"
+            placeholder="rating"
+          />
+          <!-- <span id="selectedRating">1</span> -->
+        </div>
+        <div>
+          <button onclick="search()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p style="margin-left: 10%">
+        showing results for <i> <span id="catname"></span></i>
+      </p>
+    </div>
+
+    <div id="products"></div>
+  </body>
+  <script>
+    function loadproducts(prodCategory = "", prodName = "", prodRating = "") {
+      document.getElementById("catname").innerText = prodCategory;
+      if (prodRating == 0) {
+        prodRating = "";
+      }
+      let html = ``;
+      fetch(`https://dummyjson.com/products/category/${prodCategory}`)
+        .then((res) => res.json())
+        .then((data) => {
+          let products = data.products;
+          console.log(products);
+
+          for (let i = 0; i < products.length; i++) {
+            let product = products[i];
+            let prodInfo = "";
+
+            if (
+              (prodName &&
+                product.title.toLowerCase().includes(prodName.toLowerCase())) ||
+              (prodRating && Math.ceil(product.rating) == prodRating)
+            ) {
+              prodInfo += `<div class="product_card">
+
+            <div class="img_card">
+              <img src="${product.thumbnail}" onclick="redirect(${product.id})">
+            </div>
+
+            <div class="info_card">
+
+            <h3 onclick="redirect(${product.id})">${product.title}</h3>
+             <p class="description">${product.description}</p>
+             <h3>$ ${product.price}</h3>
+             <p>rating: ${Math.ceil(product.rating)}</p>
+              </div>
+            </div>`;
+            } else if (!prodName && !prodRating) {
+              prodInfo += `<div class="product_card">
+
+            <div class="img_card">
+              <img src="${product.thumbnail}" onclick="redirect(${product.id})">
+            </div>
+
+            <div class="info_card">
+
+            <h3 onclick="redirect(${product.id})">${product.title}</h3>
+             <p class="description">${product.description}</p>
+             <h3>$ ${product.price}</h3>
+             <p>rating: ${Math.ceil(product.rating)}</p>
+              </div>
+            </div>`;
+            }
+            html += prodInfo;
+          }
+          if (html == "") {
+            html = `<p style='text-align:center;width:100%'>NO PRODUCTS FOUND</p>`;
+          }
+          document.getElementById("products").innerHTML = html;
+        });
+    }
+
+    let prodCategory = "";
+    document.addEventListener("DOMContentLoaded", function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      prodCategory = urlParams.get("category");
+      loadproducts(prodCategory, "", "");
+    });
+
+    const slider = document.getElementById("rating");
+
+    slider.addEventListener("input", () => {
+      document.getElementById("selectedRating").innerText = slider.value;
+    });
+
+    function search() {
+      let searchvalue = document.getElementById("search").value;
+      let ratingValue = document.getElementById("rating").value;
+
+      loadproducts(prodCategory, searchvalue, ratingValue);
+    }
+
+    function redirect(prodId) {
+      window.location.href =
+        "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/product.html?prodId=" +
+        prodId;
+    }
+
+    //homepage button
+
+    //homepage redirection
+    function homepageRedirect() {
+      window.location.href =
+        "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/index.html";
+    }
+
+    function searchRedirect() {
+      window.location.href =
+        "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/search.html";
+    }
+  </script>
+</html>

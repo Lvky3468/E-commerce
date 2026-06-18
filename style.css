@@ -1,0 +1,36 @@
+#category {
+  width: 80%;
+  margin: 10px auto;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.category_card {
+  border: 1px solid rgb(194, 89, 106);
+  padding: 15px;
+  border-radius: 12px;
+  height: 100px;
+  width: 45%;
+  cursor: pointer;
+  font-size: 25px;
+  font-family:
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.category_card:hover {
+  transform: translateY(-5px);
+}
+
+@media screen and (max-width: 1200px) {
+  .category_card {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .category_card {
+    width: 100%;
+  }
+}

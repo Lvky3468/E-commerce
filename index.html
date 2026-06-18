@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        font-family:
+          "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        margin: 0;
+      }
+
+      #navbar {
+        background-color: #333;
+        color: white;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 15px 30px;
+        margin-bottom: 20px;
+      }
+
+      #logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      #nav-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-item {
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .nav-item:hover {
+        color: #4da6ff;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div id="navbar">
+      <div class="nav-item" onclick="homepageRedirect()">Dummy Amazon</div>
+
+      <div>
+        <input
+          type="text"
+          id="searchname"
+          name="searchname"
+          placeholder="search products.."
+        />
+
+        <button onclick="searchproducts()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="category"></div>
+    <script>
+      function onLoad() {
+        let html = ``;
+        fetch("https://dummyjson.com/products/categories")
+          .then((res) => res.json())
+          .then((data) => {
+            for (let i = 0; i < data.length; i++) {
+              const randomColor = `hsl(${Math.floor(Math.random() * 360)}, 70%, 90%)`;
+              let category = `<div class="category_card" onclick="redirect('${data[i].slug}')" style="background-color:${randomColor}"> ${data[i].name} </div>`;
+              html += category;
+            }
+            document.getElementById("category").innerHTML = html;
+          });
+      }
+
+      function redirect(catname) {
+        window.location.href =
+          "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/products.html?category=" +
+          catname;
+      }
+
+      function searchproducts() {
+        let searchvalue = document.getElementById("searchname").value;
+
+        window.location.href =
+          "file:///C:/Users/dlava/OneDrive/Desktop/ecommerce/search.html?search=" +
+          searchvalue;
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        onLoad();
+      });
+    </script>
+  </body>
+</html>
